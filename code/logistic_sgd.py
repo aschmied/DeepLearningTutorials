@@ -43,6 +43,7 @@ import os
 import sys
 import timeit
 
+import matplotlib.pyplot as plt
 import numpy
 
 import theano
@@ -466,10 +467,23 @@ def predict():
     test_set_x, test_set_y = datasets[2]
     test_set_x = test_set_x.get_value()
 
-    predicted_values = predict_model(test_set_x[:10])
-    print("Predicted values for the first 10 examples in test set:")
-    print(predicted_values)
+    index = 0
+    while True:
+        input = test_set_x[index]
 
+        img = plt.imshow(input.reshape([28, 28]), cmap='gray')
+        plt.show()
+
+        print("Predicted value is:")
+        predicted_value = predict_model(test_set_x[index:index + 1])
+        print(predicted_value)
+
+        index += 1
+
+        response = raw_input('Type q to quit or ENTER to continue: ')
+        if response == 'q':
+            break
 
 if __name__ == '__main__':
-    sgd_optimization_mnist()
+    # sgd_optimization_mnist()
+    predict()
