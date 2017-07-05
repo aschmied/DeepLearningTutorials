@@ -8,7 +8,8 @@ from collections import defaultdict
 
 if __name__ == '__main__':
 
-    throot = "/".join(sys.path[0].split("/")[:-2])
+    pathdirs = os.path.normpath(sys.path[0]).split(os.path.sep)
+    throot = os.path.sep.join(pathdirs[:-2])
 
     options = defaultdict(bool)
     output_arg = getopt.getopt(sys.argv[1:], 'o:', ['rst', 'help', 'nopdf'])[0]
@@ -29,7 +30,7 @@ if __name__ == '__main__':
         except OSError:
             pass
 
-    outdir = options['-o'] or (throot + '/html')
+    outdir = options['-o'] or os.path.join(throot, 'html')
     mkdir(outdir)
     os.chdir(outdir)
     mkdir("doc")
